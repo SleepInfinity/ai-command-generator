@@ -1,6 +1,5 @@
 # ai-command-generator
 
-**Generate and run Linux commands in your terminal using AI.**  
 Powered by Google's Gemini API, this tool helps you generate, edit, and execute shell commands on the go — right from your terminal.
 
 ---
@@ -59,7 +58,7 @@ Example output:
 
 ### 🔧 Make it easier to use with an alias:
 
-Add this line to your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.):
+Run this command and specify your shell configuration file (`~/.bashrc`, `~/.zshrc`, etc.):
 
 ```bash
 echo "alias ai='python3 $(pwd)/ai.py'" >> ~/.bashrc
