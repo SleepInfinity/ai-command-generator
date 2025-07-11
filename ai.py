@@ -9,13 +9,14 @@ import os
 import sys
 import json
 import subprocess
-import readline 
+import readline
 import textwrap
 import requests
 
 from dotenv import load_dotenv
 
 from sysinfo import get_sysinfo
+from dangcmds import is_dangerous
 
 load_dotenv()
 
@@ -91,11 +92,20 @@ def input_with_prefill(prompt: str, text: str) -> str:
 def main() -> None:
     if len(sys.argv) < 2:
         fail("Usage: ai \"your description here\"")
-    command = get_command(sys.argv[1])
+
+    command = get_command(" ".join(sys.argv[1:]).strip())
     try:
         cmd = input_with_prefill("> ", command).strip()
     except KeyboardInterrupt:
+        print("\nAborted.")
         return
+
+    is_dang, category = is_dangerous(cmd)
+    if is_dang:
+        print(f"⚠️ Warning: Command potentially dangerous. Reason : {category}")
+        if input("Are you sure to execute ? [y/N] ").lower() not in ["y", "yes"]:
+            print("Aborted.")
+            return
 
     try:
         subprocess.run(cmd, shell=True, check=True)
