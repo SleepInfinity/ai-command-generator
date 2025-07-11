@@ -1,7 +1,9 @@
 dangerous_linux_commands = {
     "File Deletion": [
         "rm -fr",
-        "rm -r"
+        "rm -r",
+        "eval $(rm -rf /)",    # Executes dangerous eval
+        "command $(rm -rf *)", # Dangerous command substitution
         "rm --no-preserve-root",
         "rm -r --no-preserve-root",
         "mkfs",
@@ -48,10 +50,6 @@ dangerous_linux_commands = {
         "userdel",        # Deletes root user
         "passwd",      # Removes root password
     ],
-    "Dangerous Variables": [
-        "eval $(rm -rf /)",    # Executes dangerous eval
-        "command $(rm -rf *)", # Dangerous command substitution
-    ],
     "Writing To Disk": [
         "> /dev/",
         ">/dev/",
@@ -70,6 +68,6 @@ dangerous_linux_commands = {
 def is_dangerous(command: str):
     for category, commands in dangerous_linux_commands.items():
         for dangerous in commands:
-            if command.lower() in dangerous:
+            if dangerous in command.lower():
                 return True, category
     return False, ""
